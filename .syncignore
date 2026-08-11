@@ -1,0 +1,9 @@
+.git/
+.Rproj.user/
+.DS_Store
+server.env
+renv/library/
+renv/staging/
+_targets/
+results/
+logs/

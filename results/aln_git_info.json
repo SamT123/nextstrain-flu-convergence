@@ -1,0 +1,417 @@
+{
+  "branch": "main",
+  "commit_hash": "5e39c5357a3e71c85a36fcf678b2c1b20768ef7b",
+  "timestamp": "2026-08-03 21:00:32 BST",
+  "config_md5": "8ae3438a81b7e8b3a82548952727f9ea",
+  "reference": {
+    "path": "/home/samt123/databases/flu-alignments/references/H3N2/HA.gb",
+    "md5": "fa6fe9b051cbfe5be4f396f0932d7bde",
+    "id": "CY002064.1",
+    "length": 1762
+  },
+  "n_sequences": 235312,
+  "latest_submission_date": "2026-08-03",
+  "gene_table_hash": "68efca7878d744b9b220fd68a07cea0e",
+  "batches": [
+    {
+      "batch": "2026-05-12T12-01-22_batch01",
+      "window_start": "1900-01-01",
+      "window_end": "2010-01-01",
+      "finished_at": "2026-05-12T12:07:03.662020+00:00",
+      "n_viruses": 14060
+    },
+    {
+      "batch": "2026-05-12T20-01-52_batch01",
+      "window_start": "2010-01-02",
+      "window_end": "2011-01-01",
+      "finished_at": "2026-05-12T20:08:50.748548+00:00",
+      "n_viruses": 15979
+    },
+    {
+      "batch": "2026-05-13T11-01-37_batch01",
+      "window_start": "2011-01-02",
+      "window_end": "2012-01-02",
+      "finished_at": "2026-05-13T11:07:42.247842+00:00",
+      "n_viruses": 14969
+    },
+    {
+      "batch": "2026-05-20T09-43-43_batch01",
+      "window_start": "2012-01-03",
+      "window_end": "2013-01-01",
+      "finished_at": "2026-05-20T09:50:37.662918+00:00",
+      "n_viruses": 19111
+    },
+    {
+      "batch": "2026-06-11T18-39-55_batch01",
+      "window_start": "2013-01-02",
+      "window_end": "2014-01-01",
+      "finished_at": "2026-06-11T18:48:16.490142+00:00",
+      "n_viruses": 17572
+    },
+    {
+      "batch": "2026-06-11T18-39-55_batch02",
+      "window_start": "2014-01-02",
+      "window_end": "2015-01-01",
+      "finished_at": "2026-06-11T18:54:46.446797+00:00",
+      "n_viruses": 17126
+    },
+    {
+      "batch": "2026-06-11T20-29-07_batch01",
+      "window_start": "2015-01-02",
+      "window_end": "2015-07-03",
+      "finished_at": "2026-06-11T20:36:51.052908+00:00",
+      "n_viruses": 18221
+    },
+    {
+      "batch": "2026-06-11T20-29-07_batch02",
+      "window_start": "2015-07-04",
+      "window_end": "2016-01-02",
+      "finished_at": "2026-06-11T20:42:43.119835+00:00",
+      "n_viruses": 11964
+    },
+    {
+      "batch": "2026-06-12T09-16-06_batch01",
+      "window_start": "2016-01-03",
+      "window_end": "2016-07-03",
+      "finished_at": "2026-06-12T09:24:50.659632+00:00",
+      "n_viruses": 16310
+    },
+    {
+      "batch": "2026-06-12T09-16-06_batch02",
+      "window_start": "2016-07-04",
+      "window_end": "2017-01-01",
+      "finished_at": "2026-06-12T09:30:28.870722+00:00",
+      "n_viruses": 11704
+    },
+    {
+      "batch": "2026-06-12T13-24-40_batch01",
+      "window_start": "2017-01-02",
+      "window_end": "2017-04-03",
+      "finished_at": "2026-06-12T13:33:02.354012+00:00",
+      "n_viruses": 10824
+    },
+    {
+      "batch": "2026-06-12T13-24-40_batch02",
+      "window_start": "2017-04-04",
+      "window_end": "2017-07-03",
+      "finished_at": "2026-06-12T13:37:16.441047+00:00",
+      "n_viruses": 9719
+    },
+    {
+      "batch": "2026-06-15T09-54-22_batch01",
+      "window_start": "2017-07-04",
+      "window_end": "2017-11-17",
+      "finished_at": "2026-06-15T10:02:19.257592+00:00",
+      "n_viruses": 13471
+    },
+    {
+      "batch": "2026-06-15T10-07-27_batch01",
+      "window_start": "2017-11-18",
+      "window_end": "2018-02-28",
+      "finished_at": "2026-06-15T10:15:48.905662+00:00",
+      "n_viruses": 13576
+    },
+    {
+      "batch": "2026-06-15T10-07-27_batch02",
+      "window_start": "2018-03-01",
+      "window_end": "2018-06-10",
+      "finished_at": "2026-06-15T10:21:05.448541+00:00",
+      "n_viruses": 10745
+    },
+    {
+      "batch": "2026-06-15T16-23-59_batch01",
+      "window_start": "2018-06-11",
+      "window_end": "2018-10-31",
+      "finished_at": "2026-06-15T16:31:52.978203+00:00",
+      "n_viruses": 10732
+    },
+    {
+      "batch": "2026-06-15T16-23-59_batch02",
+      "window_start": "2018-11-01",
+      "window_end": "2019-01-10",
+      "finished_at": "2026-06-15T16:34:50.924396+00:00",
+      "n_viruses": 4715
+    },
+    {
+      "batch": "2026-06-15T18-14-11_batch01",
+      "window_start": "2019-01-11",
+      "window_end": "2019-04-09",
+      "finished_at": "2026-06-15T18:23:39.615013+00:00",
+      "n_viruses": 18657
+    },
+    {
+      "batch": "2026-06-15T18-14-11_batch02",
+      "window_start": "2019-04-10",
+      "window_end": "2019-07-07",
+      "finished_at": "2026-06-15T18:31:45.638657+00:00",
+      "n_viruses": 15010
+    },
+    {
+      "batch": "2026-06-16T09-11-14_batch01",
+      "window_start": "2019-07-08",
+      "window_end": "2019-11-20",
+      "finished_at": "2026-06-16T09:20:47.989677+00:00",
+      "n_viruses": 19111
+    },
+    {
+      "batch": "2026-06-16T09-11-14_batch02",
+      "window_start": "2019-11-21",
+      "window_end": "2020-04-04",
+      "finished_at": "2026-07-10T13:01:55.986886+00:00",
+      "n_viruses": 18501
+    },
+    {
+      "batch": "2026-06-22T11-02-14_batch01",
+      "window_start": "2020-04-05",
+      "window_end": "2021-04-01",
+      "finished_at": "2026-06-22T11:13:13.437913+00:00",
+      "n_viruses": 19634
+    },
+    {
+      "batch": "2026-06-23T08-44-05_batch01",
+      "window_start": "2021-04-02",
+      "window_end": "2021-12-16",
+      "finished_at": "2026-06-23T08:51:35.671334+00:00",
+      "n_viruses": 11917
+    },
+    {
+      "batch": "2026-06-23T08-44-05_batch02",
+      "window_start": "2021-12-17",
+      "window_end": "2022-04-25",
+      "finished_at": "2026-06-23T08:57:59.714787+00:00",
+      "n_viruses": 11265
+    },
+    {
+      "batch": "2026-06-23T09-17-50_batch01",
+      "window_start": "2022-04-26",
+      "window_end": "2022-07-20",
+      "finished_at": "2026-06-23T09:26:23.722027+00:00",
+      "n_viruses": 11113
+    },
+    {
+      "batch": "2026-06-23T09-17-50_batch02",
+      "window_start": "2022-07-21",
+      "window_end": "2022-10-13",
+      "finished_at": "2026-06-23T09:32:57.192623+00:00",
+      "n_viruses": 11347
+    },
+    {
+      "batch": "2026-06-24T09-09-52_batch01",
+      "window_start": "2022-10-14",
+      "window_end": "2023-01-10",
+      "finished_at": "2026-06-24T09:19:29.481591+00:00",
+      "n_viruses": 13887
+    },
+    {
+      "batch": "2026-06-24T09-09-52_batch02",
+      "window_start": "2023-01-11",
+      "window_end": "2023-02-23",
+      "finished_at": "2026-06-24T09:29:02.264760+00:00",
+      "n_viruses": 15915
+    },
+    {
+      "batch": "2026-06-24T15-21-47_batch01",
+      "window_start": "2023-02-24",
+      "window_end": "2023-04-12",
+      "finished_at": "2026-06-24T15:29:37.352797+00:00",
+      "n_viruses": 10558
+    },
+    {
+      "batch": "2026-06-24T15-21-47_batch02",
+      "window_start": "2023-04-13",
+      "window_end": "2023-05-29",
+      "finished_at": "2026-06-24T15:37:00.728914+00:00",
+      "n_viruses": 9823
+    },
+    {
+      "batch": "2026-06-26T09-32-03_batch01",
+      "window_start": "2023-05-30",
+      "window_end": "2023-08-14",
+      "finished_at": "2026-06-26T09:42:06.802893+00:00",
+      "n_viruses": 14041
+    },
+    {
+      "batch": "2026-06-26T09-32-03_batch02",
+      "window_start": "2023-08-15",
+      "window_end": "2023-10-30",
+      "finished_at": "2026-06-26T09:48:45.854369+00:00",
+      "n_viruses": 11543
+    },
+    {
+      "batch": "2026-06-26T14-08-50_batch01",
+      "window_start": "2023-10-31",
+      "window_end": "2023-12-23",
+      "finished_at": "2026-06-26T14:16:49.451345+00:00",
+      "n_viruses": 13856
+    },
+    {
+      "batch": "2026-06-26T14-08-50_batch02",
+      "window_start": "2023-12-24",
+      "window_end": "2024-02-15",
+      "finished_at": "2026-06-26T14:28:46.168338+00:00",
+      "n_viruses": 19512
+    },
+    {
+      "batch": "2026-06-30T11-21-09_batch01",
+      "window_start": "2024-02-16",
+      "window_end": "2024-03-15",
+      "finished_at": "2026-06-30T11:29:37.364122+00:00",
+      "n_viruses": 8926
+    },
+    {
+      "batch": "2026-06-30T11-21-09_batch02",
+      "window_start": "2024-03-16",
+      "window_end": "2024-04-13",
+      "finished_at": "2026-06-30T11:37:45.649775+00:00",
+      "n_viruses": 11139
+    },
+    {
+      "batch": "2026-07-03T09-31-21_batch01",
+      "window_start": "2024-04-14",
+      "window_end": "2024-05-26",
+      "finished_at": "2026-07-03T09:43:02.659778+00:00",
+      "n_viruses": 14373
+    },
+    {
+      "batch": "2026-07-03T14-41-47_batch01",
+      "window_start": "2024-05-27",
+      "window_end": "2024-07-13",
+      "finished_at": "2026-07-03T14:50:39.013804+00:00",
+      "n_viruses": 10203
+    },
+    {
+      "batch": "2026-07-03T14-41-47_batch02",
+      "window_start": "2024-07-14",
+      "window_end": "2024-08-29",
+      "finished_at": "2026-07-03T14:58:45.315545+00:00",
+      "n_viruses": 12373
+    },
+    {
+      "batch": "2026-07-03T21-36-28_batch01",
+      "window_start": "2024-08-30",
+      "window_end": "2024-12-01",
+      "finished_at": "2026-07-03T21:47:10.509077+00:00",
+      "n_viruses": 15767
+    },
+    {
+      "batch": "2026-07-06T13-46-30_batch01",
+      "window_start": "2024-12-02",
+      "window_end": "2025-01-16",
+      "finished_at": "2026-07-06T14:02:04.498405+00:00",
+      "n_viruses": 17917
+    },
+    {
+      "batch": "2026-07-06T14-29-34_batch01",
+      "window_start": "2025-01-17",
+      "window_end": "2025-02-02",
+      "finished_at": "2026-07-06T14:38:19.006635+00:00",
+      "n_viruses": 6926
+    },
+    {
+      "batch": "2026-07-06T14-29-34_batch02",
+      "window_start": "2025-02-03",
+      "window_end": "2025-02-19",
+      "finished_at": "2026-07-06T14:48:16.908958+00:00",
+      "n_viruses": 14622
+    },
+    {
+      "batch": "2026-07-06T16-39-47_batch01",
+      "window_start": "2025-02-20",
+      "window_end": "2025-03-17",
+      "finished_at": "2026-07-06T16:51:45.946582+00:00",
+      "n_viruses": 15251
+    },
+    {
+      "batch": "2026-07-07T11-33-37_batch01",
+      "window_start": "2025-03-18",
+      "window_end": "2025-04-24",
+      "finished_at": "2026-07-07T11:47:56.875864+00:00",
+      "n_viruses": 18937
+    },
+    {
+      "batch": "2026-07-07T11-33-37_batch02",
+      "window_start": "2025-04-25",
+      "window_end": "2025-06-01",
+      "finished_at": "2026-07-07T11:57:07.431060+00:00",
+      "n_viruses": 12830
+    },
+    {
+      "batch": "2026-07-08T10-32-00_batch01",
+      "window_start": "2025-06-02",
+      "window_end": "2025-07-25",
+      "finished_at": "2026-07-08T10:47:37.699283+00:00",
+      "n_viruses": 18969
+    },
+    {
+      "batch": "2026-07-08T10-32-00_batch02",
+      "window_start": "2025-07-26",
+      "window_end": "2025-09-16",
+      "finished_at": "2026-07-08T10:59:33.135787+00:00",
+      "n_viruses": 17249
+    },
+    {
+      "batch": "2026-07-08T13-19-42_batch01",
+      "window_start": "2025-09-17",
+      "window_end": "2025-11-09",
+      "finished_at": "2026-07-08T13:27:18.833044+00:00",
+      "n_viruses": 9010
+    },
+    {
+      "batch": "2026-07-08T16-13-18_batch01",
+      "window_start": "2025-11-10",
+      "window_end": "2026-01-04",
+      "finished_at": "2026-07-08T16:27:13.582639+00:00",
+      "n_viruses": 18465
+    },
+    {
+      "batch": "2026-07-08T16-13-18_batch02",
+      "window_start": "2026-01-05",
+      "window_end": "2026-02-01",
+      "finished_at": "2026-07-08T16:40:05.466822+00:00",
+      "n_viruses": 19351
+    },
+    {
+      "batch": "2026-07-09T09-14-46_batch01",
+      "window_start": "2026-02-02",
+      "window_end": "2026-03-11",
+      "finished_at": "2026-07-09T09:28:14.246551+00:00",
+      "n_viruses": 18077
+    },
+    {
+      "batch": "2026-07-09T09-56-35_batch01",
+      "window_start": "2026-03-12",
+      "window_end": "2026-04-10",
+      "finished_at": "2026-07-09T10:09:07.947708+00:00",
+      "n_viruses": 10299
+    },
+    {
+      "batch": "2026-07-09T09-56-35_batch02",
+      "window_start": "2026-04-11",
+      "window_end": "2026-05-10",
+      "finished_at": "2026-07-09T10:18:24.823365+00:00",
+      "n_viruses": 10746
+    },
+    {
+      "batch": "2026-07-09T09-56-35_batch03",
+      "window_start": "2026-05-11",
+      "window_end": "2026-07-09",
+      "finished_at": "2026-07-09T10:35:22.634432+00:00",
+      "n_viruses": 12996
+    },
+    {
+      "batch": "2026-08-03T08-56-18_batch01",
+      "window_start": "2026-07-10",
+      "window_end": "2026-08-03",
+      "finished_at": "2026-08-03T08:59:38.101587+00:00",
+      "n_viruses": 3813
+    },
+    {
+      "batch": "2026-08-03T09-27-20_batch01",
+      "window_start": "2026-07-09",
+      "window_end": "2026-07-09",
+      "finished_at": "2026-08-03T09:28:04.453897+00:00",
+      "n_viruses": 120
+    }
+  ]
+}
+

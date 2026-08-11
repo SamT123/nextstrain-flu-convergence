@@ -1,0 +1,45 @@
+# Targets cache
+_targets/
+_targets.yaml
+
+# Pipeline logs
+logs/
+
+# Build outputs
+results/**
+!results/**/
+!results/**/*.tsv
+!results/**/*git_info*
+
+# R environment
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.Rprofile.local
+
+# renv library (keep lock file only)
+renv/library/
+renv/local/
+renv/cellar/
+renv/lock/
+renv/python/
+renv/staging/
+
+# System files
+.DS_Store
+
+# Large data files
+*.RDS
+*.rds
+
+# Scratch
+local/
+scratchpad.md
+
+# Remote config
+server.env
+
+run.sh
+scripts/**
+plans/*

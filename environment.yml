@@ -1,0 +1,14 @@
+name: influenza_convergence
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - cmaple=1.1.0
+  - iqtree=2.3.6
+  - mafft>=7.490
+  - ucsc-fatovcf
+  - usher=0.6.3
+  - chronumental>=0.0.65
+  - jax=0.4.27
+  - numpyro<0.20
