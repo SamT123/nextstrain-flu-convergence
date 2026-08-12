@@ -44,7 +44,10 @@ writeWeightTable <- function(weight_table, path, provenance) {
 
 writeWindows <- function(windows, path) {
   windows |>
-    dplyr::mutate(window_end_numeric = numericDate(window_end)) |>
+    dplyr::mutate(
+      window_start_numeric = numericDate(window_start),
+      window_end_numeric = numericDate(window_end)
+    ) |>
     readr::write_tsv(path)
   path
 }
