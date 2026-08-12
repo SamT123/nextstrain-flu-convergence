@@ -19,7 +19,7 @@ buildWeightTable <- function(window_ratios, windows, ha1_length) {
       gene = dplyr::if_else(in_ha1, "HA1", "HA2"),
       site = dplyr::if_else(in_ha1, at, at - ha1_length),
       expected_n = round(expected_n, 6),
-      weight = round(log2((n + 1) / (expected_n + 1)), 6)
+      lcr = round(log2((n + 1) / (expected_n + 1)), 6)
     ) |>
     dplyr::inner_join(windows, by = "window_start", unmatched = "error") |>
     dplyr::select(
@@ -30,7 +30,7 @@ buildWeightTable <- function(window_ratios, windows, ha1_length) {
       window_end,
       n,
       expected_n,
-      weight
+      lcr
     ) |>
     dplyr::arrange(window_end, gene, site, from_aa, derived_aa)
 }

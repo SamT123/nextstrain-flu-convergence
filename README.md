@@ -40,8 +40,17 @@ A table containing LCR scores for each substitution in each time window:
 | `window_end` | end of the window                                                                                                    |
 | `n`          | number of times the substitutions occurred on branches within the time window                                        |
 | `expected_n` | number of times the substitutions was expected to occurr on branches within the time window, based on the null model |
-| `weight`     | `log2((n + 1) / (expected_n + 1))`                                                                                   |
+| `lcr`        | `log2((n + 1) / (expected_n + 1))`                                                                                   |
 
 ### `results/lcr_windows.tsv`
 
-Start & end dates of windows, and end date as a decimal year in the same convention as treetime.
+Start & end dates of windows, each also as a decimal year in the same convention as treetime.
+
+| column                 | meaning                           |
+| ---------------------- | --------------------------------- |
+| `window_start`         | start of the window, ISO date     |
+| `window_end`           | end of the window, ISO date       |
+| `window_start_numeric` | start of the window, decimal year |
+| `window_end_numeric`   | end of the window, decimal year   |
+
+Windows are contiguous, so each window's start equals the previous window's end.
