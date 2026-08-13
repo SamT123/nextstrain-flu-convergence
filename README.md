@@ -33,8 +33,8 @@ A table containing LCR scores for each substitution in each time window:
 
 | column       | meaning                                                                                                              |
 | ------------ | -------------------------------------------------------------------------------------------------------------------- |
-| `gene`       | `HA1` or `HA2`                                                                                                       |
-| `site`       | 1-based position within the gene: HA1 1–329, HA2 1–221                                                               |
+| `gene`       | `SigPep`, `HA1` or `HA2`                                                                                             |
+| `site`       | 1-based position within the gene: SigPep 1–16, HA1 1–329, HA2 1–221                                                  |
 | `from_aa`    | ancestral amino acid                                                                                                 |
 | `derived_aa` | derived amino acid                                                                                                   |
 | `window_end` | end of the window                                                                                                    |

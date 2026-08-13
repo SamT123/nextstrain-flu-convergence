@@ -24,10 +24,6 @@ RESULTS_DIR <- "results"
 FIRST_WINDOW_START <- as.Date("2012-04-01")
 LAST_WINDOW_START <- as.Date("2026-04-01")
 
-HA1_LENGTH <- 329L
-HA_LENGTH <- 550
-MEASURED_POSITIONS <- 1:550
-
 INITIAL_IQTREE_SIZE <- 10
 CASCADE_SIZES <- c(100, 1000)
 TREE_SEED <- 100
@@ -53,10 +49,11 @@ list(
     format = "file"
   ),
 
-  tar_target(
-    coding_range,
-    readMaturePeptideSpan(ALIGNMENT_PATH)
-  ),
+  tar_target(reference, readReference(ALIGNMENT_PATH)),
+  tar_target(coding_range, reference$range),
+  tar_target(gene_lengths, reference$gene_lengths),
+  tar_target(reference_nucleotides, reference$nucleotides),
+  tar_target(reference_amino_acids, reference$amino_acids),
 
   # make tree -----
   tar_target(
@@ -108,7 +105,7 @@ list(
       tree = tree,
       sequences = alignment |>
         pull(dna_sequence, Isolate_unique_identifier),
-      outsequence = seqUtils::alaska_232_2015_nts
+      outsequence = reference_nucleotides
     )
   ),
 
@@ -143,7 +140,7 @@ list(
       reference_strain = chronumental_reference_strain,
       date_column = "chronumental_date",
       n_steps = CHRONUMENTAL_STEPS,
-      genome_size = HA_LENGTH * 3
+      genome_size = nchar(reference_nucleotides)
     )
   ),
 
@@ -151,8 +148,8 @@ list(
     usher_tree_and_sequences,
     convergence::addASRusher(
       chronumental_tree_and_sequences,
-      nuc_ref = seqUtils::alaska_232_2015_nts,
-      aa_ref = seqUtils::alaska_232_2015_aas
+      nuc_ref = reference_nucleotides,
+      aa_ref = reference_amino_acids
     )
   ),
 
@@ -184,7 +181,7 @@ list(
         tree_and_sequences = tree_and_sequences_dated,
         tree_info = tree_info,
         time_boundaries = as.character(window_boundaries),
-        positions = MEASURED_POSITIONS,
+        positions = seq_len(nchar(reference_amino_acids)),
         date_column = "predicted_date_char",
         calculate_p_values = FALSE
       )
@@ -202,7 +199,7 @@ list(
 
   tar_target(
     weight_table,
-    buildWeightTable(window_ratios, windows, HA1_LENGTH)
+    buildWeightTable(window_ratios, windows, gene_lengths)
   ),
 
   tar_target(
@@ -213,8 +210,7 @@ list(
       windows = windows,
       reference_strain = chronumental_reference_strain,
       date_precision = table(alignment$collection_date_precision),
-      ha1_length = HA1_LENGTH,
-      ha_length = HA_LENGTH
+      gene_lengths = gene_lengths
     )
   ),
 

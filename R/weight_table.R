@@ -6,7 +6,13 @@ numericDate <- function(dates) {
 
 # 1 entry / substitution / window.
 # Windows are labelled by their end date
-buildWeightTable <- function(window_ratios, windows, ha1_length) {
+buildWeightTable <- function(window_ratios, windows, gene_lengths) {
+  gene_at <- factor(
+    rep(names(gene_lengths), gene_lengths),
+    levels = names(gene_lengths)
+  )
+  site_at <- sequence(gene_lengths)
+
   window_ratios |>
     purrr::map(\(ratios) {
       dplyr::select(ratios[["aas"]], at, from, to, n, expected_n)
@@ -15,9 +21,8 @@ buildWeightTable <- function(window_ratios, windows, ha1_length) {
     dplyr::mutate(
       window_start = as.Date(substr(window_name, 1, 10)),
       at = as.integer(at),
-      in_ha1 = at <= ha1_length,
-      gene = dplyr::if_else(in_ha1, "HA1", "HA2"),
-      site = dplyr::if_else(in_ha1, at, at - ha1_length),
+      gene = gene_at[at],
+      site = site_at[at],
       expected_n = round(expected_n, 6),
       lcr = round(log2((n + 1) / (expected_n + 1)), 6)
     ) |>
@@ -66,8 +71,7 @@ buildProvenance <- function(
   windows,
   reference_strain,
   date_precision,
-  ha1_length,
-  ha_length
+  gene_lengths
 ) {
   git <- jsonlite::fromJSON(
     fs::path(alignment_path, "git_info", ext = "json"),
@@ -100,9 +104,11 @@ buildProvenance <- function(
   c(
     "H3N2 HA LCR",
     sprintf(
-      "with 1-based numbering within HA1 (1-%d) or HA2 (1-%d)",
-      ha1_length,
-      ha_length - ha1_length
+      "with 1-based numbering within %s",
+      paste(
+        sprintf("%s (1-%d)", names(gene_lengths), gene_lengths),
+        collapse = ", "
+      )
     ),
     "window_end: end of the window used to calculate the LCR",
     paste0(names(fields), ": ", fields)
