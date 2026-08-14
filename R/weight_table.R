@@ -1,11 +1,9 @@
-# Write date as decimal year like treetime (which makes nextstrain's node dates)
 numericDate <- function(dates) {
   lubridate::year(dates) +
-    (lubridate::yday(dates) - 0.5) / (365 + lubridate::leap_year(dates))
+    (lubridate::yday(dates) - 1) / (365 + lubridate::leap_year(dates))
 }
 
 # 1 entry / substitution / window.
-# Windows are labelled by their end date
 buildWeightTable <- function(window_ratios, windows, gene_lengths) {
   gene_at <- factor(
     rep(names(gene_lengths), gene_lengths),
@@ -19,7 +17,7 @@ buildWeightTable <- function(window_ratios, windows, gene_lengths) {
     }) |>
     purrr::list_rbind(names_to = "window_name") |>
     dplyr::mutate(
-      window_start = as.Date(substr(window_name, 1, 10)),
+      window_start = as.Date(window_name),
       at = as.integer(at),
       gene = gene_at[at],
       site = site_at[at],
@@ -51,7 +49,7 @@ writeWindows <- function(windows, path) {
   windows |>
     dplyr::mutate(
       window_start_numeric = numericDate(window_start),
-      window_end_numeric = numericDate(window_end)
+      window_end_numeric = numericDate(window_end + 1)
     ) |>
     readr::write_tsv(path)
   path
@@ -69,6 +67,9 @@ buildProvenance <- function(
   alignment_path,
   n_tips,
   windows,
+  window_width,
+  window_increment,
+  min_window_width,
   reference_strain,
   date_precision,
   gene_lengths
@@ -82,11 +83,14 @@ buildProvenance <- function(
     generated = format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z"),
     tips = n_tips,
     windows = sprintf(
-      "%d (%s to %s, the final window is open-ended)",
+      "%d (%s to %s, the final window ends at the last day of data)",
       nrow(windows),
       min(windows$window_start),
       max(windows$window_end)
     ),
+    "window width" = window_width,
+    "window increment" = window_increment,
+    "min window width" = min_window_width,
     "chronumental ref node" = reference_strain,
     "tip date precision" = paste(
       names(date_precision),
@@ -110,7 +114,7 @@ buildProvenance <- function(
         collapse = ", "
       )
     ),
-    "window_end: end of the window used to calculate the LCR",
+    "window_end: last day included in the window used to calculate the LCR",
     paste0(names(fields), ": ", fields)
   )
 }

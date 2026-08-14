@@ -22,7 +22,9 @@ ALIGNMENT_PATH <- Sys.getenv(
 RESULTS_DIR <- "results"
 
 FIRST_WINDOW_START <- as.Date("2012-04-01")
-LAST_WINDOW_START <- as.Date("2026-04-01")
+WINDOW_WIDTH <- "1 year"
+WINDOW_INCREMENT <- "6 months"
+MIN_WINDOW_WIDTH <- "6 months"
 
 INITIAL_IQTREE_SIZE <- 10
 CASCADE_SIZES <- c(100, 1000)
@@ -55,7 +57,7 @@ list(
   tar_target(reference_nucleotides, reference$nucleotides),
   tar_target(reference_amino_acids, reference$amino_acids),
 
-  # make tree -----
+  # alignment and windows -----
   tar_target(
     alignment,
     {
@@ -87,6 +89,30 @@ list(
     }
   ),
 
+  tar_target(last_collection_date, max(alignment$Collection_date)),
+
+  tar_target(
+    windows,
+    makeWindows(
+      first_start = FIRST_WINDOW_START,
+      width = WINDOW_WIDTH,
+      increment = WINDOW_INCREMENT,
+      min_width = MIN_WINDOW_WIDTH,
+      last_date = last_collection_date
+    )
+  ),
+
+  tar_target(
+    time_windows,
+    purrr::map2(
+      as.character(windows$window_start),
+      as.character(windows$window_end),
+      c
+    ) |>
+      purrr::set_names(as.character(windows$window_start))
+  ),
+
+  # make tree -----
   tar_target(
     tree,
     seqUtils::make_iterative_tree(
@@ -164,11 +190,6 @@ list(
   ),
 
   tar_target(
-    window_boundaries,
-    seq(FIRST_WINDOW_START, LAST_WINDOW_START, by = "1 year")
-  ),
-
-  tar_target(
     window_ratios,
     {
       tree_and_sequences_dated <- usher_tree_and_sequences
@@ -180,7 +201,7 @@ list(
       convergence::getTimeIntervalSubstitutionRatios(
         tree_and_sequences = tree_and_sequences_dated,
         tree_info = tree_info,
-        time_boundaries = as.character(window_boundaries),
+        time_windows = time_windows,
         positions = seq_len(nchar(reference_amino_acids)),
         date_column = "predicted_date_char",
         calculate_p_values = FALSE
@@ -189,14 +210,6 @@ list(
   ),
 
   # export -----
-  tar_target(
-    windows,
-    tibble(
-      window_start = window_boundaries,
-      window_end = window_boundaries + years(1)
-    )
-  ),
-
   tar_target(
     weight_table,
     buildWeightTable(window_ratios, windows, gene_lengths)
@@ -208,6 +221,9 @@ list(
       alignment_path = ALIGNMENT_PATH,
       n_tips = ape::Ntip(collapsed_tree),
       windows = windows,
+      window_width = WINDOW_WIDTH,
+      window_increment = WINDOW_INCREMENT,
+      min_window_width = MIN_WINDOW_WIDTH,
       reference_strain = chronumental_reference_strain,
       date_precision = table(alignment$collection_date_precision),
       gene_lengths = gene_lengths

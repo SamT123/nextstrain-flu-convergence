@@ -1359,8 +1359,8 @@
       "RemoteHost": "api.github.com",
       "RemoteUsername": "SamT123",
       "RemoteRepo": "convergence",
-      "RemoteRef": "096806e3250cd51a89244690012bba4697332b84",
-      "RemoteSha": "096806e3250cd51a89244690012bba4697332b84",
+      "RemoteRef": "ecce20311dbb941cab08960749cb3caf7b178be5",
+      "RemoteSha": "ecce20311dbb941cab08960749cb3caf7b178be5",
       "Remotes": "SamT123/seqUtils"
     },
     "cpp11": {

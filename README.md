@@ -1,6 +1,6 @@
 # nextstrain-flu-convergence
 
-This pipeline calculates Log Convergence Ratios (LCR) for every amino acid substitution in H3N2 HA in one-year windows, for colouring the public `nextstrain/seasonal-flu`
+This pipeline calculates Log Convergence Ratios (LCR) for every amino acid substitution in H3N2 HA in time windows for colouring the public `nextstrain/seasonal-flu`
 tree.
 
 For more details on the method, see:
@@ -37,20 +37,18 @@ A table containing LCR scores for each substitution in each time window:
 | `site`       | 1-based position within the gene: SigPep 1–16, HA1 1–329, HA2 1–221                                                  |
 | `from_aa`    | ancestral amino acid                                                                                                 |
 | `derived_aa` | derived amino acid                                                                                                   |
-| `window_end` | end of the window                                                                                                    |
+| `window_end` | last day included in the window                                                                                      |
 | `n`          | number of times the substitutions occurred on branches within the time window                                        |
 | `expected_n` | number of times the substitutions was expected to occurr on branches within the time window, based on the null model |
 | `lcr`        | `log2((n + 1) / (expected_n + 1))`                                                                                   |
 
 ### `results/lcr_windows.tsv`
 
-Start & end dates of windows, each also as a decimal year in the same convention as treetime.
+Start & end dates of windows.
 
-| column                 | meaning                           |
-| ---------------------- | --------------------------------- |
-| `window_start`         | start of the window, ISO date     |
-| `window_end`           | end of the window, ISO date       |
-| `window_start_numeric` | start of the window, decimal year |
-| `window_end_numeric`   | end of the window, decimal year   |
-
-Windows are contiguous, so each window's start equals the previous window's end.
+| column                 | meaning                                                   |
+| ---------------------- | --------------------------------------------------------- |
+| `window_start`         | first day included in the window, ISO date                |
+| `window_end`           | last day included in the window, ISO date                 |
+| `window_start_numeric` | start of window, decimal year: midnight of `window_start` |
+| `window_end_numeric`   | end of window, decimal year: midnight after `window_end`  |
