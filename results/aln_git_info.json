@@ -1,17 +1,17 @@
 {
   "branch": "main",
-  "commit_hash": "5e39c5357a3e71c85a36fcf678b2c1b20768ef7b",
-  "timestamp": "2026-08-03 21:00:32 BST",
-  "config_md5": "8ae3438a81b7e8b3a82548952727f9ea",
+  "commit_hash": "912e80a352f2a62f3160295582534938ae34d5b8",
+  "timestamp": "2026-09-16 11:46:17 BST",
+  "config_md5": "91e2ac9f2d3e81cfb185363ae1b0bb80",
   "reference": {
     "path": "/home/samt123/databases/flu-alignments/references/H3N2/HA.gb",
     "md5": "fa6fe9b051cbfe5be4f396f0932d7bde",
     "id": "CY002064.1",
     "length": 1762
   },
-  "n_sequences": 235312,
-  "latest_submission_date": "2026-08-03",
-  "gene_table_hash": "68efca7878d744b9b220fd68a07cea0e",
+  "n_sequences": 238735,
+  "latest_submission_date": "2026-09-15",
+  "gene_table_hash": "ea0b6eef3d1cde0294d9f3d3fc8e75e4",
   "batches": [
     {
       "batch": "2026-05-12T12-01-22_batch01",
@@ -411,6 +411,20 @@
       "window_end": "2026-07-09",
       "finished_at": "2026-08-03T09:28:04.453897+00:00",
       "n_viruses": 120
+    },
+    {
+      "batch": "2026-08-19T11-53-37_batch01",
+      "window_start": "2026-08-03",
+      "window_end": "2026-08-19",
+      "finished_at": "2026-08-19T11:56:41.899549+00:00",
+      "n_viruses": 3055
+    },
+    {
+      "batch": "2026-09-16T09-44-38_batch01",
+      "window_start": "2026-08-19",
+      "window_end": "2026-09-16",
+      "finished_at": "2026-09-16T09:49:07.245280+00:00",
+      "n_viruses": 5978
     }
   ]
 }
