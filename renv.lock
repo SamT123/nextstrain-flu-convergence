@@ -3910,7 +3910,7 @@
     },
     "seqUtils": {
       "Package": "seqUtils",
-      "Version": "0.0.0.9000",
+      "Version": "0.0.0.9001",
       "Source": "GitHub",
       "Title": "Utilities for Biological Sequence Analysis",
       "Authors@R": "person(\"Sam\", \"Turner\", , \"sat65@cam.ac.uk\", role = c(\"aut\", \"cre\"))",
@@ -3930,6 +3930,7 @@
         "rlang",
         "stats",
         "stringr",
+        "tibble",
         "withr"
       ],
       "Suggests": [
@@ -3947,8 +3948,8 @@
       "RemoteHost": "api.github.com",
       "RemoteUsername": "SamT123",
       "RemoteRepo": "seqUtils",
-      "RemoteRef": "master",
-      "RemoteSha": "c06a50348cebaccba0ef0b08efd3d81e0aa6047a"
+      "RemoteRef": "13a039269130c024633d7ddfbce5b0793e315e39",
+      "RemoteSha": "13a039269130c024633d7ddfbce5b0793e315e39"
     },
     "statmod": {
       "Package": "statmod",

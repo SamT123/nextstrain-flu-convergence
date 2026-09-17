@@ -30,6 +30,8 @@ INITIAL_IQTREE_SIZE <- 10
 CASCADE_SIZES <- c(100, 1000)
 TREE_SEED <- 100
 N_THREADS <- Sys.getenv("SLURM_CPUS_PER_TASK", "AUTO")
+DATE_OUTLIER_IQD <- 3
+MAX_DATE_OUTLIER_FRACTION <- 0.01
 CHRONUMENTAL_STEPS <- 10000
 TREE_INFO_SEED <- 1
 
@@ -170,11 +172,50 @@ list(
     ape::di2multi(rooted_tree, tol = 1e-10)
   ),
 
+  # date outliers -----
+
+  tar_target(
+    date_outliers,
+    {
+      tip_dates <- alignment$Collection_date[
+        match(collapsed_tree$tip.label, alignment$Isolate_unique_identifier)
+      ]
+      stopifnot(!anyNA(tip_dates))
+
+      outliers <- seqUtils::find_date_outliers(
+        collapsed_tree,
+        tip_dates,
+        iqd = DATE_OUTLIER_IQD
+      )
+
+      readr::write_tsv(
+        outliers$outliers,
+        fs::path(results_dir, "date_outliers", ext = "tsv")
+      )
+
+      flagged_fraction <- nrow(outliers$outliers) / ape::Ntip(collapsed_tree)
+      if (flagged_fraction > MAX_DATE_OUTLIER_FRACTION) {
+        stop(sprintf(
+          "the date outlier rule flagged %.2f%% of tips, over the %.2f%% cap",
+          100 * flagged_fraction,
+          100 * MAX_DATE_OUTLIER_FRACTION
+        ))
+      }
+      outliers
+    }
+  ),
+
+  tar_target(
+    date_outlier_labels,
+    sort(date_outliers$outliers$label)
+  ),
+
   tar_target(
     tree_and_sequences,
     convergence::makeTreeAndSequences(
-      tree = collapsed_tree,
-      sequences = alignment
+      tree = ape::drop.tip(collapsed_tree, date_outlier_labels),
+      sequences = alignment |>
+        filter(!Isolate_unique_identifier %in% date_outlier_labels)
     )
   ),
 
@@ -182,7 +223,7 @@ list(
 
   tar_target(
     chronumental_reference_strain,
-    alignment |>
+    tree_and_sequences$sequences |>
       filter(collection_date_precision == "day") |>
       arrange(Collection_date, Isolate_unique_identifier) |>
       slice(1) |>
@@ -190,14 +231,24 @@ list(
   ),
 
   tar_target(
+    chronumental_version,
+    system2("chronumental", "--help", stdout = TRUE)[[1]],
+    cue = tar_cue("always")
+  ),
+
+  tar_target(
     chronumental_tree_and_sequences,
-    convergence::toChronumentalTree(
-      tree_and_sequences,
-      reference_strain = chronumental_reference_strain,
-      date_column = "chronumental_date",
-      n_steps = CHRONUMENTAL_STEPS,
-      genome_size = nchar(reference_nucleotides)
-    )
+    {
+      stopifnot(!is.null(chronumental_version))
+      convergence::toChronumentalTree(
+        tree_and_sequences,
+        reference_strain = chronumental_reference_strain,
+        date_column = "chronumental_date",
+        n_steps = CHRONUMENTAL_STEPS,
+        genome_size = nchar(reference_nucleotides)
+      ) |>
+        checkPredictedDates()
+    }
   ),
 
   tar_target(
@@ -251,13 +302,17 @@ list(
       alignment_path = ALIGNMENT_PATH,
       gitinfo_file = gitinfo_file,
       repo_gitinfo_file = repo_gitinfo_file,
-      n_tips = ape::Ntip(collapsed_tree),
+      n_tips = ape::Ntip(tree_and_sequences$tree),
+      n_date_outliers = length(date_outlier_labels),
+      date_outlier_iqd = DATE_OUTLIER_IQD,
       windows = windows,
       window_width = WINDOW_WIDTH,
       window_increment = WINDOW_INCREMENT,
       min_window_width = MIN_WINDOW_WIDTH,
       reference_strain = chronumental_reference_strain,
-      date_precision = table(alignment$collection_date_precision),
+      date_precision = table(
+        tree_and_sequences$sequences$collection_date_precision
+      ),
       gene_lengths = gene_lengths
     )
   ),

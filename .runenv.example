@@ -21,7 +21,7 @@ PUBLISH_DIR=html/nextstrain-flu-convergence
 # the NAS all nodes mount, so the build can land on any node.
 # export HOME=/syn/samt123
 # export CONDA_BIN=/syn/samt123/miniforge3/bin/conda
-# export CONDA_ENV=influenza_convergence
+# export CONDA_ENV=nextstrain-flu-convergence
 # export R_PREFIX=/syn/samt123/opt/R/4.4.3
 # export ALIGNMENT_PATH=/syn/samt123/databases/flu-alignments/results/H3-HA-human-dedup
 # export RENV_RESTORE=1

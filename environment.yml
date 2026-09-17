@@ -1,4 +1,4 @@
-name: influenza_convergence
+name: nextstrain-flu-convergence
 channels:
   - conda-forge
   - bioconda
@@ -14,6 +14,8 @@ dependencies:
   # in-place `conda install` keeps the older libraries and usher cannot load.
   - libprotobuf=4.25.3
   - boost-cpp=1.85.0
-  - chronumental>=0.0.65
   - jax=0.4.27
   - numpyro<0.20
+  - pip
+  - pip:
+      - chronumental @ git+https://github.com/theosanderson/chronumental.git@e63f2b6

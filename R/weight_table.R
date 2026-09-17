@@ -68,6 +68,8 @@ buildProvenance <- function(
   gitinfo_file,
   repo_gitinfo_file,
   n_tips,
+  n_date_outliers,
+  date_outlier_iqd,
   windows,
   window_width,
   window_increment,
@@ -82,6 +84,11 @@ buildProvenance <- function(
   fields <- c(
     generated = format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z"),
     tips = n_tips,
+    "date outliers dropped" = sprintf(
+      "%d (root-to-tip divergence over %g IQR from the clock line)",
+      n_date_outliers,
+      date_outlier_iqd
+    ),
     windows = sprintf(
       "%d (%s to %s, the final window ends at the last day of data)",
       nrow(windows),

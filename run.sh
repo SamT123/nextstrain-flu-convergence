@@ -14,7 +14,7 @@ LOG="logs/run.log"
 
 runLocal() {
   eval "$("${CONDA_BIN:-conda}" shell.bash hook)"
-  conda activate "${CONDA_ENV:-influenza_convergence}"
+  conda activate "${CONDA_ENV:-nextstrain-flu-convergence}"
   if [ -n "${R_PREFIX:-}" ]; then
     [ -x "$R_PREFIX/bin/Rscript" ] ||
       { echo "no Rscript under R_PREFIX=$R_PREFIX" >&2; exit 1; }
