@@ -1,7 +1,4 @@
-readReference <- function(alignment_path) {
-  genbank_path <- fs::dir_ls(alignment_path, glob = "*.gb")
-  stopifnot(length(genbank_path) == 1)
-
+readReference <- function(genbank_path) {
   record <- seqUtils::read_genbank(genbank_path)
   orfs <- seqUtils::extract_orfs(
     record,

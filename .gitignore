@@ -37,9 +37,10 @@ renv/staging/
 local/
 scratchpad.md
 
-# Remote config
-server.env
-
-run.sh
-scripts/**
+# Plans and project instructions
 plans/*
+CLAUDE.md
+
+# Machine-local run/sync config
+.runenv
+repo_git_info.json

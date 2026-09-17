@@ -4,11 +4,16 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - cmaple=1.1.0
+  - cmaple=2.0.0
   - iqtree=2.3.6
   - mafft>=7.490
   - ucsc-fatovcf
-  - usher=0.6.3
+  - usher=0.6.6
+  # usher 0.6.6 links libprotobuf 4.25 and boost 1.85, but declares only
+  # `protobuf <5` and an unversioned `boost-cpp`. Without these pins an
+  # in-place `conda install` keeps the older libraries and usher cannot load.
+  - libprotobuf=4.25.3
+  - boost-cpp=1.85.0
   - chronumental>=0.0.65
   - jax=0.4.27
   - numpyro<0.20

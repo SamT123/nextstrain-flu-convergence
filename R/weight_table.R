@@ -65,6 +65,8 @@ packageSha <- function(package) {
 
 buildProvenance <- function(
   alignment_path,
+  gitinfo_file,
+  repo_gitinfo_file,
   n_tips,
   windows,
   window_width,
@@ -74,10 +76,8 @@ buildProvenance <- function(
   date_precision,
   gene_lengths
 ) {
-  git <- jsonlite::fromJSON(
-    fs::path(alignment_path, "git_info", ext = "json"),
-    simplifyVector = FALSE
-  )
+  git <- jsonlite::fromJSON(gitinfo_file, simplifyVector = FALSE)
+  repo_git <- jsonlite::fromJSON(repo_gitinfo_file, simplifyVector = FALSE)
 
   fields <- c(
     generated = format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z"),
@@ -102,7 +102,11 @@ buildProvenance <- function(
     "alignment built" = git[["timestamp"]],
     "alignment reference" = git[["reference"]][["id"]],
     convergence = packageSha("convergence"),
-    seqUtils = packageSha("seqUtils")
+    seqUtils = packageSha("seqUtils"),
+    "pipeline commit" = paste0(
+      repo_git[["commit"]],
+      if (isTRUE(repo_git[["dirty"]])) " plus uncommitted changes" else ""
+    )
   )
 
   c(

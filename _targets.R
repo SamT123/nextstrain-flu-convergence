@@ -29,6 +29,7 @@ MIN_WINDOW_WIDTH <- "6 months"
 INITIAL_IQTREE_SIZE <- 10
 CASCADE_SIZES <- c(100, 1000)
 TREE_SEED <- 100
+N_THREADS <- Sys.getenv("SLURM_CPUS_PER_TASK", "AUTO")
 CHRONUMENTAL_STEPS <- 10000
 TREE_INFO_SEED <- 1
 
@@ -42,16 +43,44 @@ list(
   ),
 
   tar_target(
+    alignment_file,
+    fs::path(ALIGNMENT_PATH, "aln", ext = "RDS"),
+    format = "file"
+  ),
+
+  tar_target(
+    reference_file,
+    {
+      genbank_paths <- unname(fs::dir_ls(ALIGNMENT_PATH, glob = "*.gb"))
+      stopifnot(length(genbank_paths) == 1)
+      genbank_paths
+    },
+    format = "file"
+  ),
+
+  tar_target(
+    gitinfo_file,
+    fs::path(ALIGNMENT_PATH, "git_info", ext = "json"),
+    format = "file"
+  ),
+
+  tar_target(
+    repo_gitinfo_file,
+    "repo_git_info.json",
+    format = "file"
+  ),
+
+  tar_target(
     alignment_gitinfo,
     fs::file_copy(
-      fs::path(ALIGNMENT_PATH, "git_info", ext = "json"),
+      gitinfo_file,
       fs::path(results_dir, "aln_git_info", ext = "json"),
       overwrite = TRUE
     ),
     format = "file"
   ),
 
-  tar_target(reference, readReference(ALIGNMENT_PATH)),
+  tar_target(reference, readReference(reference_file)),
   tar_target(coding_range, reference$range),
   tar_target(gene_lengths, reference$gene_lengths),
   tar_target(reference_nucleotides, reference$nucleotides),
@@ -61,8 +90,7 @@ list(
   tar_target(
     alignment,
     {
-      aln <- fs::path(ALIGNMENT_PATH, "aln", ext = "RDS") |>
-        readRDS() |>
+      aln <- readRDS(alignment_file) |>
         mutate(
           dna_sequence = str_sub(dna_aln, coding_range[1], coding_range[2])
         ) |>
@@ -121,7 +149,8 @@ list(
       initial_iqtree_size = INITIAL_IQTREE_SIZE,
       cascade_sizes = CASCADE_SIZES,
       work_dir = fs::path(results_dir, "tree"),
-      seed = TREE_SEED
+      seed = TREE_SEED,
+      num_threads = N_THREADS
     )
   ),
 
@@ -131,7 +160,8 @@ list(
       tree = tree,
       sequences = alignment |>
         pull(dna_sequence, Isolate_unique_identifier),
-      outsequence = reference_nucleotides
+      outsequence = reference_nucleotides,
+      num_threads = N_THREADS
     )
   ),
 
@@ -219,6 +249,8 @@ list(
     provenance,
     buildProvenance(
       alignment_path = ALIGNMENT_PATH,
+      gitinfo_file = gitinfo_file,
+      repo_gitinfo_file = repo_gitinfo_file,
       n_tips = ape::Ntip(collapsed_tree),
       windows = windows,
       window_width = WINDOW_WIDTH,
