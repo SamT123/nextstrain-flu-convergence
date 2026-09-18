@@ -1,10 +1,11 @@
 {
   "branch": "main",
-  "commit_hash": "912e80a352f2a62f3160295582534938ae34d5b8",
-  "timestamp": "2026-09-16 11:46:17 BST",
-  "config_md5": "91e2ac9f2d3e81cfb185363ae1b0bb80",
+  "commit_hash": "a7f9fd848f6eae30073a0a08760656da3ff6a94f",
+  "uncommitted_changes": false,
+  "timestamp": "2026-09-17 16:30:28 BST",
+  "config_md5": "8789622e622bd05ca97ef3bf560b556a",
   "reference": {
-    "path": "/home/samt123/databases/flu-alignments/references/H3N2/HA.gb",
+    "path": "/syn/samt123/databases/flu-alignments/references/H3N2/HA.gb",
     "md5": "fa6fe9b051cbfe5be4f396f0932d7bde",
     "id": "CY002064.1",
     "length": 1762

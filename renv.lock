@@ -3948,8 +3948,8 @@
       "RemoteHost": "api.github.com",
       "RemoteUsername": "SamT123",
       "RemoteRepo": "seqUtils",
-      "RemoteRef": "13a039269130c024633d7ddfbce5b0793e315e39",
-      "RemoteSha": "13a039269130c024633d7ddfbce5b0793e315e39"
+      "RemoteRef": "1b5ccdf7c9ca784e490a76782f377ec8cb79bb8b",
+      "RemoteSha": "1b5ccdf7c9ca784e490a76782f377ec8cb79bb8b"
     },
     "statmod": {
       "Package": "statmod",

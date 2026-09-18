@@ -29,9 +29,12 @@ MIN_WINDOW_WIDTH <- "6 months"
 INITIAL_IQTREE_SIZE <- 10
 CASCADE_SIZES <- c(100, 1000)
 TREE_SEED <- 100
+TREE_MODEL <- "UNREST"
+TREE_MODEL_IQTREE <- "UNREST+G4"
+TREE_SITE_RATE <- "SCALAR"
 N_THREADS <- Sys.getenv("SLURM_CPUS_PER_TASK", "AUTO")
 DATE_OUTLIER_IQD <- 3
-MAX_DATE_OUTLIER_FRACTION <- 0.01
+MAX_DATE_OUTLIER_FRACTION <- 0.02
 CHRONUMENTAL_STEPS <- 10000
 TREE_INFO_SEED <- 1
 
@@ -152,7 +155,10 @@ list(
       cascade_sizes = CASCADE_SIZES,
       work_dir = fs::path(results_dir, "tree"),
       seed = TREE_SEED,
-      num_threads = N_THREADS
+      num_threads = N_THREADS,
+      model = TREE_MODEL,
+      model_iqtree = TREE_MODEL_IQTREE,
+      site_rate = TREE_SITE_RATE
     )
   ),
 
@@ -163,7 +169,9 @@ list(
       sequences = alignment |>
         pull(dna_sequence, Isolate_unique_identifier),
       outsequence = reference_nucleotides,
-      num_threads = N_THREADS
+      num_threads = N_THREADS,
+      model = TREE_MODEL,
+      site_rate = TREE_SITE_RATE
     )
   ),
 
