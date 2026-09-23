@@ -64,6 +64,7 @@ packageSha <- function(package) {
 }
 
 buildProvenance <- function(
+  subtype,
   alignment_path,
   gitinfo_file,
   repo_gitinfo_file,
@@ -117,7 +118,7 @@ buildProvenance <- function(
   )
 
   c(
-    "H3N2 HA LCR",
+    paste(subtype, "HA LCR"),
     sprintf(
       "with 1-based numbering within %s",
       paste(

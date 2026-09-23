@@ -1,6 +1,5 @@
-# Targets cache
+# Targets cache. _targets.yaml is tracked: it is the subtype registry.
 _targets/
-_targets.yaml
 
 # Pipeline logs
 logs/

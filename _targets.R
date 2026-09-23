@@ -15,11 +15,18 @@ tar_option_set(
 
 tar_source()
 
-ALIGNMENT_PATH <- Sys.getenv(
-  "ALIGNMENT_PATH",
-  "../flu-alignments/results/H3-HA-human-dedup"
-)
-RESULTS_DIR <- "results"
+SUBTYPES <- targets::tar_config_projects()
+
+SUBTYPE <- Sys.getenv("TAR_PROJECT")
+if (!SUBTYPE %in% SUBTYPES) {
+  stop("set TAR_PROJECT to one of ", paste(SUBTYPES, collapse = ", "))
+}
+# a registry entry pointing at another subtype's store would overwrite it
+stopifnot(targets::tar_config_get("store") == fs::path("_targets", SUBTYPE))
+
+ALIGNMENT_ROOT <- Sys.getenv("ALIGNMENT_ROOT", "../flu-alignments/results")
+ALIGNMENT_PATH <- fs::path(ALIGNMENT_ROOT, paste0(SUBTYPE, "-HA-human-dedup"))
+RESULTS_DIR <- fs::path("results", SUBTYPE)
 
 FIRST_WINDOW_START <- as.Date("2012-04-01")
 WINDOW_WIDTH <- "1 year"
@@ -307,6 +314,7 @@ list(
   tar_target(
     provenance,
     buildProvenance(
+      subtype = SUBTYPE,
       alignment_path = ALIGNMENT_PATH,
       gitinfo_file = gitinfo_file,
       repo_gitinfo_file = repo_gitinfo_file,

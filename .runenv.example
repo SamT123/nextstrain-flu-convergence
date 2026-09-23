@@ -8,7 +8,8 @@
 # Where ./sync.sh and ./run.sh reach.
 REMOTE_HOST=acmacs
 REMOTE_DIR=/syn/samt123/proj/nextstrain-flu-convergence
-# tmux session holding a remote build; also the "is a build active" lock
+# prefix of the tmux session holding a remote build; the session is
+# $SESSION-<subtype>, which is also the per-subtype "is a build active" lock
 SESSION=nfc
 # ./sync.sh publish target. notebooks serves /var/www/notebooks/samt123 -> ~/html.
 PUBLISH_HOST=notebooks
@@ -19,10 +20,11 @@ PUBLISH_DIR=html/nextstrain-flu-convergence
 # already on PATH, the alignments are a sibling directory, and the build runs
 # directly rather than through SLURM. On acmacs every path must be under /syn,
 # the NAS all nodes mount, so the build can land on any node.
+# ALIGNMENT_ROOT holds one directory per subtype.
 # export HOME=/syn/samt123
 # export CONDA_BIN=/syn/samt123/miniforge3/bin/conda
 # export CONDA_ENV=nextstrain-flu-convergence
 # export R_PREFIX=/syn/samt123/opt/R/4.4.3
-# export ALIGNMENT_PATH=/syn/samt123/databases/flu-alignments/results/H3-HA-human-dedup
+# export ALIGNMENT_ROOT=/syn/samt123/databases/flu-alignments/results
 # export RENV_RESTORE=1
 # SRUN_OPTS="--cpus-per-task=8 --mem=24G"

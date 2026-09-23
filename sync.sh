@@ -1,14 +1,27 @@
 #!/usr/bin/env bash
-# Move code out to acmacs, results and the build state back, outputs to the web.
-#   ./sync.sh push    [rsync args]  code -> acmacs (mirror, minus .syncignore)
-#   ./sync.sh pull    [rsync args]  results/, logs/, _targets/ <- acmacs
-#   ./sync.sh publish [rsync args]  results/ -> notebooks, then fix permissions
+# Move code out to acmacs, one subtype's results and build state back, outputs
+# to the web.
+#   ./sync.sh push             code -> acmacs (mirror, minus .syncignore)
+#   ./sync.sh pull <subtype>   that subtype's results, log and store <- acmacs
+#   ./sync.sh publish          results/ -> notebooks, then fix permissions
+# All three take extra rsync arguments, e.g. -n for a dry run.
 set -euo pipefail
 cd "$(dirname "$0")"
 
 [ -f .runenv ] && . ./.runenv
 
 export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+# _targets.yaml is the subtype registry; adding one there is the only edit
+SUBTYPES=$(sed -n 's/^\([A-Za-z0-9_-]*\):.*/\1/p' _targets.yaml | xargs)
+
+requireSubtype() {
+  case " $SUBTYPES " in
+    *" ${1:-} "*) return 0 ;;
+  esac
+  echo "subtype must be one of $SUBTYPES, got '${1:-}'" >&2
+  exit 2
+}
 
 # The server checkout has no .git, so the commit travels as a file that
 # buildProvenance() reads. results/ is excluded because the pipeline rewrites
@@ -20,9 +33,15 @@ writeGitInfo() {
     "$(git rev-parse HEAD)" "$dirty" > repo_git_info.json
 }
 
+# A push must wait for every subtype; a pull only for the one it fetches, since
+# the stores and results directories are disjoint.
 assertIdle() {
-  if ssh "$REMOTE_HOST" "tmux has-session -t '$SESSION' 2>/dev/null"; then
-    echo "a build is active: watch it with ./run.sh watch" >&2
+  local active
+  # push passes nothing, matching every session, including a pre-subtype 'nfc'
+  active=$(ssh "$REMOTE_HOST" \
+    "tmux ls 2>/dev/null | grep '^$SESSION${1:+-$1:}' || true")
+  if [ -n "$active" ]; then
+    echo "a build is active: $active" >&2
     exit 1
   fi
 }
@@ -42,14 +61,22 @@ case "${1:-}" in
 
   pull)
     shift
-    assertIdle
-    for dir in results logs; do
-      rsync -a "$@" "$REMOTE_HOST:$REMOTE_DIR/$dir/" "$dir/"
-    done
+    requireSubtype "${1:-}"
+    subtype="$1"
+    shift
+    assertIdle "$subtype"
+    # rsync creates the last missing component of a destination, not two
+    mkdir -p "_targets/$subtype"
+    rsync -a "$@" \
+      "$REMOTE_HOST:$REMOTE_DIR/results/$subtype/" "results/$subtype/"
     # objects before the index: an interrupted pull then leaves a store whose
     # index promises less than it holds, which targets handles by rebuilding
-    rsync -a "$@" --exclude=meta "$REMOTE_HOST:$REMOTE_DIR/_targets/" _targets/
-    rsync -a "$@" "$REMOTE_HOST:$REMOTE_DIR/_targets/meta/" _targets/meta/
+    rsync -a "$@" --exclude=meta \
+      "$REMOTE_HOST:$REMOTE_DIR/_targets/$subtype/" "_targets/$subtype/"
+    rsync -a "$@" "$REMOTE_HOST:$REMOTE_DIR/_targets/$subtype/meta/" \
+      "_targets/$subtype/meta/"
+    # last: a subtype built before this log existed must not fail the pull
+    rsync -a "$@" "$REMOTE_HOST:$REMOTE_DIR/logs/run-$subtype.log" logs/
     ;;
 
   publish)
@@ -67,7 +94,8 @@ case "${1:-}" in
     ;;
 
   *)
-    echo "usage: $(basename "$0") {push|pull|publish} [rsync args]" >&2
+    echo "usage: $(basename "$0") {push|publish} [rsync args]" >&2
+    echo "       $(basename "$0") pull <subtype> [rsync args]" >&2
     exit 2
     ;;
 esac
