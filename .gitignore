@@ -43,3 +43,4 @@ CLAUDE.md
 # Machine-local run/sync config
 .runenv
 repo_git_info.json
+todo.md
